@@ -1,0 +1,33 @@
+server:
+  port: 9090 # Gateway runs on this port
+
+spring:
+  application:
+    name: flexo_apigateway
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: false  # Set to true only if you want dynamic service discovery via Eureka
+      routes:
+        - id: flexo_users_backend
+          uri: http://localhost:1010 # This is your user service's URI
+          predicates:
+            - Path=/user/** # Forward requests with this path pattern to the user service
+
+eureka:
+  client:
+    register-with-eureka: false # Gateway won't register itself
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:4040/eureka/
+
+logging:
+  level:
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.web.reactive.DispatcherHandler: TRACE
+    org.springframework.cloud.gateway.route.RouteDefinitionLocator: DEBUG

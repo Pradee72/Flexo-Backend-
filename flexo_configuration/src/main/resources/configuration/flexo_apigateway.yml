@@ -16,7 +16,7 @@ spring:
         - id: flexo_users_backend
           uri: http://localhost:1010 # This is your user service's URI
           predicates:
-            - Path=/user/** # Forward requests with this path pattern to the user service
+            - Path=/flexouser/user/** # Forward requests with this path pattern to the user service
 
 eureka:
   client:
